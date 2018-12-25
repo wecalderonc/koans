@@ -31,18 +31,77 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
-  sum1, sum2, sum3, sum4, sum5, sum6 = 0,0,0,0,0,0
-  q1 = dice.find_all {|i| i==1}
-  q2 = dice.find_all {|i| i==2}
-  q3 = dice.find_all {|i| i==3}
-  q4 = dice.find_all {|i| i==4}
-  q5 = dice.find_all {|i| i==5}
-  q6 = dice.find_all {|i| i==6}
+  if dice == []
+    sum = 0
+  else
+    basic_array = [1,2,3,4,5,6]
+    sum = 0
+    basic_array.each {|x|
+      result = sumatory(dice, x)
+      sum = sum + result
+    }
+  end
+  sum
 
+end
+
+def sumatory(dice, number)
+  array = findAll(dice, number)
+  length = array.length
+  if number == 1
+    when1(length)
+  elsif number == 5
+    when5(length)
+  else
+    whenX(length,number)
+  end
 end
 
 def findAll(dice, number)
   dice.find_all {|i| i == number}
+end
+
+def when1(length)
+  case length
+  when 1
+    100
+  when 2
+    200
+  when 3
+    1000
+  when 4
+    1100
+  when 5
+    1200
+  else
+    0
+  end
+end
+
+def when5(length)
+  case length
+  when 1
+    50
+  when 2
+    100
+  when 3
+    500
+  when 4
+    550
+  when 5
+    600
+  else
+    0
+  end
+end
+
+def whenX(length,x)
+  case length
+  when 3..5
+    x * 100
+  else
+    0
+  end
 end
 
 class AboutScoringProject < Neo::Koan
